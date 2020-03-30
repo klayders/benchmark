@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import finch.json.Json;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
@@ -78,6 +79,13 @@ public class JsonDeserializationTest {
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
     public void readValueAsGson() {
         var menuData = gson.fromJson(dom2MenuData, SnapshotCounter.class);
+    }
+
+    @Benchmark
+    @Fork(value = 1, warmups = 2)
+    @OutputTimeUnit(TimeUnit.MILLISECONDS)
+    public void readValueAsFinchJson() {
+        SnapshotCounter as = Json.parse(dom2MenuData).as(SnapshotCounter.class);
     }
 
 }

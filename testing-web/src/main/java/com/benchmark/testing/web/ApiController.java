@@ -7,13 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import reactor.netty.tcp.TcpServer;
 
 import javax.annotation.PostConstruct;
-import java.nio.charset.Charset;
-import java.time.Duration;
 
 @Slf4j
 @RestController
@@ -21,7 +17,9 @@ import java.time.Duration;
 @RequiredArgsConstructor
 public class ApiController {
 
-    @PostConstruct
+
+
+  @PostConstruct
     public void initTcpServer() {
         TcpServer.create()
                 .port(8888)
@@ -48,4 +46,10 @@ public class ApiController {
         log.info("acceptMenu: do nothing, request={}", snapshotCounter);
         return "";
     }
+
+  @PostMapping("/s")
+  public String acceptMsenu(@RequestBody SnapshotCounter snapshotCounter) {
+    log.info("acceptMenu: do nothing, request={}", snapshotCounter);
+    return "";
+  }
 }
